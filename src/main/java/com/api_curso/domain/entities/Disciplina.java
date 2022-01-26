@@ -18,6 +18,7 @@ public class Disciplina extends BaseEntity {
     private String descricao;
 
     @ManyToOne
+    @JoinColumn(name = "professor_id")
     private Professor professor;
 
     @ManyToMany
@@ -33,4 +34,6 @@ public class Disciplina extends BaseEntity {
     public Boolean removeAluno(Aluno aluno) {
         return this.alunos.remove(aluno);
     }
+
+
 }

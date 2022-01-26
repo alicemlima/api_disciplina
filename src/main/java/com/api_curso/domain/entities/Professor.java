@@ -12,6 +12,6 @@ public class Professor extends Pessoa {
 
     private String area;
 
-    @OneToMany
+    @OneToMany(mappedBy="professor")
     private Set<Disciplina> disciplinas = new HashSet<>();
 }

@@ -10,6 +10,6 @@ public class Aluno extends Pessoa {
     @Column(name = "nome_responsavel")
     private String nomeResponsavel;
 
-    @ManyToMany
+    @ManyToMany(mappedBy = "alunos")
     private Set<Disciplina> disciplinas = new HashSet<>();
 }
