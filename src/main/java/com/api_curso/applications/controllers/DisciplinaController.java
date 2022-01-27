@@ -2,7 +2,9 @@ package com.api_curso.applications.controllers;
 
 import com.api_curso.applications.interfaces.BaseController;
 import com.api_curso.domain.entities.Disciplina;
+import com.api_curso.domain.entities.Professor;
 import com.api_curso.domain.repositories.DisciplinaRepository;
+import com.api_curso.domain.repositories.ProfessorRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -13,10 +15,12 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/curso")
+@RequestMapping("/disciplinas")
 public class DisciplinaController implements BaseController<Disciplina> {
     @Autowired
     private DisciplinaRepository disciplinaRepository;
+    @Autowired
+    private ProfessorRepository professorRepository;
 
     @Override
     public ResponseEntity<Object> findAll() {
@@ -37,7 +41,20 @@ public class DisciplinaController implements BaseController<Disciplina> {
 
     @Override
     public ResponseEntity<Object> save(Disciplina request) {
-        Optional<Disciplina> disciplina = Optional.of(disciplinaRepository.save(request));
+        Long idProfessor = request.getProfessor().getId();
+        Optional<Professor> professor = professorRepository.findById(idProfessor);
+        Optional<Disciplina> disciplina = Optional.empty();
+
+        if(!professor.isPresent()) {
+            Professor prof = new Professor();
+            prof.setNome("João Carlos");
+            Professor profSaved = professorRepository.save(prof);
+            request.setProfessor(profSaved);
+            disciplina = Optional.of(disciplinaRepository.save(request));
+            return ResponseEntity.status(HttpStatus.CREATED).body(disciplina.get());
+        }
+
+        request.setProfessor(professor.get());
 
         if(!disciplina.isPresent()) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Não foi possível salvar");
@@ -67,6 +84,6 @@ public class DisciplinaController implements BaseController<Disciplina> {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("elemento não encontrado");
         }
         disciplinaRepository.delete(disciplina.get());
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("elemento removido.");
     }
 }
