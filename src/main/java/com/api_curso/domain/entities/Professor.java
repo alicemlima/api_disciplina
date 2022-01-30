@@ -1,5 +1,6 @@
 package com.api_curso.domain.entities;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -13,5 +14,6 @@ public class Professor extends Pessoa {
     private String area;
 
     @OneToMany(mappedBy="professor")
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private Set<Disciplina> disciplinas = new HashSet<>();
 }

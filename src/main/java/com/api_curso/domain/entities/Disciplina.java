@@ -1,5 +1,6 @@
 package com.api_curso.domain.entities;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -25,6 +26,7 @@ public class Disciplina extends BaseEntity {
     @JoinTable(name = "disciplina_aluno",
             joinColumns = @JoinColumn(name = "disciplina_id"),
             inverseJoinColumns = @JoinColumn(name = "aluno_id"))
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private Set<Aluno> alunos = new HashSet<>();
 
     public Boolean addAluno(Aluno aluno){

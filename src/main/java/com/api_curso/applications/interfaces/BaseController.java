@@ -16,11 +16,11 @@ public interface BaseController<T> {
     public ResponseEntity<Object> findOne(@PathVariable Long id);
 
     @PostMapping
-    public ResponseEntity<Object> save(@RequestBody T request);
+    public ResponseEntity<Object> save(@RequestBody T request) throws Exception;
 
     @PutMapping("/{id}")
     public ResponseEntity<Object> update(@PathVariable Long id, @RequestBody T request);
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Object> remover(@PathVariable Long id);
+    public ResponseEntity<Object> remove(@PathVariable Long id);
 }
