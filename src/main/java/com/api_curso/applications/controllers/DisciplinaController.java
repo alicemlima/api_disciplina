@@ -34,13 +34,13 @@ public class DisciplinaController implements BaseController<Disciplina> {
     private AlunoRepository alunoRepository;
 
     @Override
-    public ResponseEntity<Object> findAll() {
+    public ResponseEntity<List<Disciplina>> findAll() {
         List<Disciplina> disciplinas = disciplinaRepository.findAll();
         return ResponseEntity.status(HttpStatus.OK).body(disciplinas);
     }
 
     @Override
-    public ResponseEntity<Object> findOne(Long id) {
+    public ResponseEntity<Disciplina> findOne(Long id) {
         Disciplina disciplina = disciplinaRepository
                 .findById(id)
                 .orElseThrow(() -> new EntityNotFoundException(Disciplina.class.getSimpleName()));
@@ -49,38 +49,37 @@ public class DisciplinaController implements BaseController<Disciplina> {
     }
 
     @Override
-    public ResponseEntity<Object> save(Disciplina request)  {
+    public ResponseEntity<Disciplina> save(Disciplina request)  {
 
         if(disciplinaRepository.findByNome(request.getNome()).isPresent()) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Já existe uma disciplina com esse nome.");
+//            criar erro duplicated
+//            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Já existe uma disciplina com esse nome.");
         }
 
         Optional<Disciplina> disciplina = Optional.of(disciplinaRepository.save(request));
 
-        if(!disciplina.isPresent()) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Não foi possível salvar");
-        }
+        if(!disciplina.isPresent()) throw  new EntityNotFoundException("erro");
+
         return ResponseEntity.status(HttpStatus.CREATED).body(disciplina.get());
     }
 
     @Override
-    public ResponseEntity<Object> update(Long id, Disciplina request) {
+    public ResponseEntity<Disciplina> update(Long id, Disciplina request) {
         Disciplina disciplina = disciplinaRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException(Disciplina.class.getSimpleName()));
 
         BeanUtils.copyProperties(request, disciplina, "id");
         Optional<Disciplina> disciplinaUpdated = Optional.of(disciplinaRepository.save(disciplina));
 
-        if(!disciplinaUpdated.isPresent()) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Não foi possível salvar");
-        }
+        if(!disciplinaUpdated.isPresent()) throw  new EntityNotFoundException("erro");
 
         return ResponseEntity.status(HttpStatus.CREATED).body(disciplinaUpdated.get());
     }
 
     @Override
     public ResponseEntity<Object> remove(Long id) {
-        Disciplina disciplina = disciplinaRepository.findById(id)
+        Disciplina disciplina = disciplinaRepository
+                .findById(id)
                 .orElseThrow(() -> new EntityNotFoundException(Disciplina.class.getSimpleName()));
 
         disciplinaRepository.delete(disciplina);
