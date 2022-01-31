@@ -53,6 +53,6 @@ public class HandleError extends ResponseEntityExceptionHandler {
             message = erro.toString();
         }
         ErrorResponse errorMessage = new ErrorResponse(LocalDateTime.now(), message);
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorMessage);
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorMessage);
     }
 }
