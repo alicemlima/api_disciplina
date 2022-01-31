@@ -12,3 +12,7 @@ INSERT INTO `aluno` (`nome`, `email`, `telefone`, `cpf`) VALUES  ('Maria Silva',
 INSERT INTO `professor` (`nome`, `email`, `telefone`, `cpf`) VALUES  ('Ruan Gabriel', 'ruan@gmail.com', '84991800002', '365.910.750-62');
 INSERT INTO `professor` (`nome`, `email`, `telefone`, `cpf`) VALUES  ('Júlia Santos', 'julia@gmail.com', '84991800002', '666.301.300-90');
 INSERT INTO `professor` (`nome`, `email`, `telefone`, `cpf`) VALUES  ('Eduarda Costa', 'edu@gmail.com', '84991800002', '259.272.150-92');
+
+INSERT INTO `disciplina_aluno` (`disciplina_id`, `aluno_id`) values  (1, 1);
+INSERT INTO `disciplina_aluno` (`disciplina_id`, `aluno_id`) values  (1, 2);
+INSERT INTO `disciplina_aluno` (`disciplina_id`, `aluno_id`) values  (1, 3);
