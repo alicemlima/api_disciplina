@@ -1,6 +1,7 @@
 package com.api_curso.domain.error;
 
 import com.api_curso.domain.error.response.ErrorResponse;
+import com.api_curso.domain.error.types.EntityNotSaveException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -45,4 +46,13 @@ public class HandleError extends ResponseEntityExceptionHandler {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorMessage);
     }
 
+    @ExceptionHandler(value = {EntityNotSaveException.class})
+    public ResponseEntity<Object> notSaveException(Exception erro) {
+        String message = erro.getLocalizedMessage();
+        if(message == null) {
+            message = erro.toString();
+        }
+        ErrorResponse errorMessage = new ErrorResponse(LocalDateTime.now(), message);
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorMessage);
+    }
 }
