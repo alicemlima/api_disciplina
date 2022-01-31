@@ -18,6 +18,11 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
+/**
+ * Responsável por controlar as rotas do endpoint (/disciplinas) e realizar a regra de negócio
+ * @author Herlmaneol Fernandes Barbosa
+ * @see com.api_curso.applications.interfaces.BaseController
+ */
 @RestController
 @RequestMapping("/disciplinas")
 public class DisciplinaController implements BaseController<Disciplina> {
