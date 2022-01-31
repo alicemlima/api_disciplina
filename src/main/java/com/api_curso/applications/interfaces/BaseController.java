@@ -1,7 +1,11 @@
 package com.api_curso.applications.interfaces;
 
+import com.api_curso.domain.entities.Disciplina;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.Set;
 
 /**
  *
@@ -9,16 +13,16 @@ import org.springframework.web.bind.annotation.*;
  */
 public interface BaseController<T> {
     @GetMapping
-    ResponseEntity<Object> findAll();
+    ResponseEntity<List<T>> findAll();
 
     @GetMapping("/{id}")
-    ResponseEntity<Object> findOne(@PathVariable Long id);
+    ResponseEntity<T> findOne(@PathVariable Long id);
 
     @PostMapping
-    ResponseEntity<Object> save(@RequestBody T request) throws Exception;
+    ResponseEntity<T> save(@RequestBody T request) throws Exception;
 
     @PutMapping("/{id}")
-    ResponseEntity<Object> update(@PathVariable Long id, @RequestBody T request);
+    ResponseEntity<T> update(@PathVariable Long id, @RequestBody T request);
 
     @DeleteMapping("/{id}")
     ResponseEntity<Object> remove(@PathVariable Long id);
