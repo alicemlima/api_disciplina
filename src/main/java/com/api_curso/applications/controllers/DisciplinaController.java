@@ -60,16 +60,12 @@ public class DisciplinaController implements BaseController<Disciplina> {
      */
     @Override
     public ResponseEntity<Disciplina> create(Disciplina request)  {
-
-        if(disciplinaRepository.findByNome(request.getNome()).isPresent()) {
+        boolean disciplinaExists = disciplinaRepository.findByNome(request.getNome()).isPresent();
+        if(disciplinaExists) {
 //            criar erro duplicated
-//            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Já existe uma disciplina com esse nome.");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Disciplina());
         }
-
         Optional<Disciplina> disciplina = Optional.of(disciplinaRepository.save(request));
-
-        if(!disciplina.isPresent()) throw  new EntityNotFoundException("erro");
-
         return ResponseEntity.status(HttpStatus.CREATED).body(disciplina.get());
     }
 
@@ -80,12 +76,8 @@ public class DisciplinaController implements BaseController<Disciplina> {
     public ResponseEntity<Disciplina> update(Long id, Disciplina request) {
         Disciplina disciplina = disciplinaRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException(Disciplina.class.getSimpleName()));
-
         BeanUtils.copyProperties(request, disciplina, "id");
         Optional<Disciplina> disciplinaUpdated = Optional.of(disciplinaRepository.save(disciplina));
-
-        if(!disciplinaUpdated.isPresent()) throw  new EntityNotFoundException("erro");
-
         return ResponseEntity.status(HttpStatus.CREATED).body(disciplinaUpdated.get());
     }
 
@@ -97,36 +89,32 @@ public class DisciplinaController implements BaseController<Disciplina> {
         Disciplina disciplina = disciplinaRepository
                 .findById(id)
                 .orElseThrow(() -> new EntityNotFoundException(Disciplina.class.getSimpleName()));
-
         disciplinaRepository.delete(disciplina);
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body("elemento removido.");
     }
 
     /**
      * Método responsável por associar um professor a uma disciplina
-     * @param disciplinaId
-     * @param professorId
-     * @return
+     * @param disciplinaId id da disciplina
+     * @param professorId id do professor
+     * @return ResponseEntity<Object> JSON
      */
     @PutMapping("/associarProfessor/{disciplinaId}/{professorId}")
     public ResponseEntity<Object> associateProfessor(@PathVariable Long disciplinaId, @PathVariable Long professorId) {
         Disciplina disciplina = disciplinaRepository.findById(disciplinaId)
                 .orElseThrow(() -> new EntityNotFoundException(Disciplina.class.getSimpleName()));
-
         Professor professor = professorRepository.findById(professorId)
                 .orElseThrow(() -> new EntityNotFoundException(Professor.class.getSimpleName()));
-
         disciplina.setProfessor(professor);
         disciplinaRepository.save(disciplina);
-
         return ResponseEntity.status(HttpStatus.CREATED).body(disciplina);
     }
 
     /**
      * Método responsável por associar um aluno a uma disciplina
-     * @param disciplinaId
-     * @param alunoId
-     * @return
+     * @param disciplinaId id da disciplina
+     * @param alunoId id do aluno
+     * @return ResponseEntity<Object> JSON
      */
     @PutMapping("/associarAluno/{disciplinaId}/{alunoId}")
     public ResponseEntity<Object> associateAluno(@PathVariable Long disciplinaId, @PathVariable Long alunoId) {
@@ -143,8 +131,8 @@ public class DisciplinaController implements BaseController<Disciplina> {
 
     /**
      * Método responsável por buscar todos os alunos associados a disciplina
-     * @param id
-     * @return
+     * @param id id da disciplina
+     * @return ResponseEntity<Object> JSON
      */
     @GetMapping("/{id}/alunos")
     public ResponseEntity<Object> listAlunos(@PathVariable Long id) {
@@ -157,8 +145,8 @@ public class DisciplinaController implements BaseController<Disciplina> {
 
     /**
      * Método responsável por buscar o professor associado a disciplina
-     * @param id
-     * @return
+     * @param id id da disciplina
+     * @return ResponseEntity<Object> JSON
      */
     @GetMapping("/{id}/professor")
     public ResponseEntity<Object> getProfessor(@PathVariable Long id) {
