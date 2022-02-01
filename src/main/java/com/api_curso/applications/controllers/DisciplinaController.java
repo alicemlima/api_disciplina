@@ -4,7 +4,7 @@ import com.api_curso.applications.interfaces.BaseController;
 import com.api_curso.domain.entities.Aluno;
 import com.api_curso.domain.entities.Disciplina;
 import com.api_curso.domain.entities.Professor;
-import com.api_curso.domain.error.types.EntityNotFoundException;
+import com.api_curso.applications.error.types.EntityNotFoundException;
 import com.api_curso.domain.repositories.AlunoRepository;
 import com.api_curso.domain.repositories.DisciplinaRepository;
 import com.api_curso.domain.repositories.ProfessorRepository;
@@ -33,12 +33,21 @@ public class DisciplinaController implements BaseController<Disciplina> {
     @Autowired
     private AlunoRepository alunoRepository;
 
+    /**
+     * Método responsável por listar todos as disciplinas
+     * @return
+     */
     @Override
     public ResponseEntity<List<Disciplina>> findAll() {
         List<Disciplina> disciplinas = disciplinaRepository.findAll();
         return ResponseEntity.status(HttpStatus.OK).body(disciplinas);
     }
 
+    /**
+     * Método responsável por buscar uma disciplina pelo id
+     * @param id
+     * @return
+     */
     @Override
     public ResponseEntity<Disciplina> findOne(Long id) {
         Disciplina disciplina = disciplinaRepository
@@ -48,6 +57,11 @@ public class DisciplinaController implements BaseController<Disciplina> {
         return ResponseEntity.status(HttpStatus.OK).body(disciplina);
     }
 
+    /**
+     * Método responsável por criar uma disciplina
+     * @param request
+     * @return
+     */
     @Override
     public ResponseEntity<Disciplina> save(Disciplina request)  {
 
@@ -63,6 +77,12 @@ public class DisciplinaController implements BaseController<Disciplina> {
         return ResponseEntity.status(HttpStatus.CREATED).body(disciplina.get());
     }
 
+    /**
+     * Método responsável por editar uma disciplina
+     * @param id
+     * @param request
+     * @return
+     */
     @Override
     public ResponseEntity<Disciplina> update(Long id, Disciplina request) {
         Disciplina disciplina = disciplinaRepository.findById(id)
@@ -76,6 +96,11 @@ public class DisciplinaController implements BaseController<Disciplina> {
         return ResponseEntity.status(HttpStatus.CREATED).body(disciplinaUpdated.get());
     }
 
+    /**
+     * Método responsável por remover uma disciplina
+     * @param id
+     * @return
+     */
     @Override
     public ResponseEntity<Object> remove(Long id) {
         Disciplina disciplina = disciplinaRepository
@@ -86,6 +111,12 @@ public class DisciplinaController implements BaseController<Disciplina> {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body("elemento removido.");
     }
 
+    /**
+     * Método responsável por associar um professor a uma disciplina
+     * @param disciplinaId
+     * @param professorId
+     * @return
+     */
     @PutMapping("/associarProfessor/{disciplinaId}/{professorId}")
     public ResponseEntity<Object> associateProfessor(@PathVariable Long disciplinaId, @PathVariable Long professorId) {
         Disciplina disciplina = disciplinaRepository.findById(disciplinaId)
@@ -100,6 +131,12 @@ public class DisciplinaController implements BaseController<Disciplina> {
         return ResponseEntity.status(HttpStatus.CREATED).body(disciplina);
     }
 
+    /**
+     * Método responsável por associar um aluno a uma disciplina
+     * @param disciplinaId
+     * @param alunoId
+     * @return
+     */
     @PutMapping("/associarAluno/{disciplinaId}/{alunoId}")
     public ResponseEntity<Object> associateAluno(@PathVariable Long disciplinaId, @PathVariable Long alunoId) {
         Disciplina disciplina = disciplinaRepository
@@ -113,6 +150,11 @@ public class DisciplinaController implements BaseController<Disciplina> {
         return ResponseEntity.status(HttpStatus.OK).body(disciplina);
     }
 
+    /**
+     * Método responsável por buscar todos os alunos associados a disciplina
+     * @param id
+     * @return
+     */
     @GetMapping("/{id}/alunos")
     public ResponseEntity<Object> listAlunos(@PathVariable Long id) {
         Disciplina disciplina = disciplinaRepository
@@ -122,6 +164,11 @@ public class DisciplinaController implements BaseController<Disciplina> {
         return ResponseEntity.status(HttpStatus.OK).body(alunos);
     }
 
+    /**
+     * Método responsável por buscar o professor associado a disciplina
+     * @param id
+     * @return
+     */
     @GetMapping("/{id}/professor")
     public ResponseEntity<Object> getProfessor(@PathVariable Long id) {
         Disciplina disciplina = disciplinaRepository
