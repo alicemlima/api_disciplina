@@ -1,9 +1,9 @@
-INSERT INTO `disciplina`(`nome`, `descricao`) VALUES ('Matemática', 'Descrição 01');
-INSERT INTO `disciplina`(`nome`, `descricao`) VALUES ('História', 'Descrição 01');
-INSERT INTO `disciplina`(`nome`, `descricao`) VALUES ('Geografia', 'Descrição 01');
-INSERT INTO `disciplina`(`nome`, `descricao`) VALUES ('Física', 'Descrição 01');
-INSERT INTO `disciplina`(`nome`, `descricao`) VALUES ('Biologia', 'Descrição 01');
-INSERT INTO `disciplina`(`nome`, `descricao`) VALUES ('Português', 'Descrição 01');
+INSERT INTO `disciplina` (`nome`, `descricao`) VALUES ('Matemática', 'Descrição 01');
+INSERT INTO `disciplina` (`nome`, `descricao`) VALUES ('História', 'Descrição 01');
+INSERT INTO `disciplina` (`nome`, `descricao`) VALUES ('Geografia', 'Descrição 01');
+INSERT INTO `disciplina` (`nome`, `descricao`) VALUES ('Física', 'Descrição 01');
+INSERT INTO `disciplina` (`nome`, `descricao`) VALUES ('Biologia', 'Descrição 01');
+INSERT INTO `disciplina` (`nome`, `descricao`) VALUES ('Português', 'Descrição 01');
 
 INSERT INTO `aluno` (`nome`, `email`, `telefone`, `cpf`) VALUES  ('João Carlos', 'joao@gmail.com', '84991800002', '216.747.480-60');
 INSERT INTO `aluno` (`nome`, `email`, `telefone`, `cpf`) VALUES  ('Leonardo Silva', 'leo@gmail.com', '84991800002', '481.473.250-37');
