@@ -1,4 +1,4 @@
-package com.api_curso.domain.error.types;
+package com.api_curso.applications.error.types;
 
 public class EntityNotSaveException extends RuntimeException {
     public EntityNotSaveException() {

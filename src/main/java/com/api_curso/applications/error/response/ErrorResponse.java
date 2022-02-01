@@ -1,4 +1,4 @@
-package com.api_curso.domain.error.response;
+package com.api_curso.applications.error.response;
 
 import lombok.Data;
 
