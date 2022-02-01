@@ -33,9 +33,9 @@ public class DisciplinaController implements BaseController<Disciplina> {
     @Autowired
     private AlunoRepository alunoRepository;
 
+
     /**
-     * Método responsável por listar todos as disciplinas
-     * @return
+     * {@inheritDoc}
      */
     @Override
     public ResponseEntity<List<Disciplina>> findAll() {
@@ -44,9 +44,7 @@ public class DisciplinaController implements BaseController<Disciplina> {
     }
 
     /**
-     * Método responsável por buscar uma disciplina pelo id
-     * @param id
-     * @return
+     * {@inheritDoc}
      */
     @Override
     public ResponseEntity<Disciplina> findOne(Long id) {
@@ -58,9 +56,7 @@ public class DisciplinaController implements BaseController<Disciplina> {
     }
 
     /**
-     * Método responsável por criar uma disciplina
-     * @param request
-     * @return
+     * {@inheritDoc}
      */
     @Override
     public ResponseEntity<Disciplina> create(Disciplina request)  {
@@ -78,10 +74,7 @@ public class DisciplinaController implements BaseController<Disciplina> {
     }
 
     /**
-     * Método responsável por editar uma disciplina
-     * @param id
-     * @param request
-     * @return
+     * {@inheritDoc}
      */
     @Override
     public ResponseEntity<Disciplina> update(Long id, Disciplina request) {
@@ -97,9 +90,7 @@ public class DisciplinaController implements BaseController<Disciplina> {
     }
 
     /**
-     * Método responsável por remover uma disciplina
-     * @param id
-     * @return
+     * {@inheritDoc}
      */
     @Override
     public ResponseEntity<Object> remove(Long id) {
