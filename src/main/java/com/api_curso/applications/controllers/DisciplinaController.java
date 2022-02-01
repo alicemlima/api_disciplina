@@ -63,7 +63,7 @@ public class DisciplinaController implements BaseController<Disciplina> {
      * @return
      */
     @Override
-    public ResponseEntity<Disciplina> save(Disciplina request)  {
+    public ResponseEntity<Disciplina> create(Disciplina request)  {
 
         if(disciplinaRepository.findByNome(request.getNome()).isPresent()) {
 //            criar erro duplicated

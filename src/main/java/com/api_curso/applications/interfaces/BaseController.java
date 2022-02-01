@@ -19,7 +19,7 @@ public interface BaseController<T> {
     ResponseEntity<T> findOne(@PathVariable Long id);
 
     @PostMapping
-    ResponseEntity<T> save(@RequestBody T request) throws Exception;
+    ResponseEntity<T> create(@RequestBody T request) throws Exception;
 
     @PutMapping("/{id}")
     ResponseEntity<T> update(@PathVariable Long id, @RequestBody T request);
