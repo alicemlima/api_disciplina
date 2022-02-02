@@ -114,10 +114,10 @@ public class DisciplinaController implements BaseController<Disciplina> {
      * Método responsável por associar um aluno a uma disciplina
      * @param disciplinaId id da disciplina
      * @param alunoId id do aluno
-     * @return ResponseEntity<Object> JSON
+     * @return ResponseEntity<Disciplina> JSON com o objeto disciplina
      */
     @PutMapping("/associarAluno/{disciplinaId}/{alunoId}")
-    public ResponseEntity<Object> associateAluno(@PathVariable Long disciplinaId, @PathVariable Long alunoId) {
+    public ResponseEntity<Disciplina> associateAluno(@PathVariable Long disciplinaId, @PathVariable Long alunoId) {
         Disciplina disciplina = disciplinaRepository
                 .findById(disciplinaId)
                 .orElseThrow(() -> new EntityNotFoundException(Disciplina.class.getSimpleName()));
@@ -126,16 +126,16 @@ public class DisciplinaController implements BaseController<Disciplina> {
                 .orElseThrow(() -> new EntityNotFoundException(Aluno.class.getSimpleName()));
         disciplina.addAluno(aluno);
         disciplinaRepository.save(disciplina);
-        return ResponseEntity.status(HttpStatus.OK).body(disciplina);
+        return ResponseEntity.ok().body(disciplina);
     }
 
     /**
      * Método responsável por buscar todos os alunos associados a disciplina
      * @param id id da disciplina
-     * @return ResponseEntity<Object> JSON
+     * @return ResponseEntity<Set<Aluno>> JSON com um array set de alunos
      */
     @GetMapping("/{id}/alunos")
-    public ResponseEntity<Object> listAlunos(@PathVariable Long id) {
+    public ResponseEntity<Set<Aluno>> listAlunos(@PathVariable Long id) {
         Disciplina disciplina = disciplinaRepository
                 .findById(id)
                 .orElseThrow(() -> new EntityNotFoundException(Disciplina.class.getSimpleName()));
@@ -146,14 +146,14 @@ public class DisciplinaController implements BaseController<Disciplina> {
     /**
      * Método responsável por buscar o professor associado a disciplina
      * @param id id da disciplina
-     * @return ResponseEntity<Object> JSON
+     * @return ResponseEntity<Professor> JSON com o objeto professor
      */
     @GetMapping("/{id}/professor")
-    public ResponseEntity<Object> getProfessor(@PathVariable Long id) {
+    public ResponseEntity<Professor> getProfessor(@PathVariable Long id) {
         Disciplina disciplina = disciplinaRepository
                 .findById(id)
                 .orElseThrow(() -> new EntityNotFoundException(Disciplina.class.getSimpleName()));
         Optional<Professor> professor = Optional.of(disciplina.getProfessor());
-        return ResponseEntity.status(HttpStatus.OK).body(professor);
+        return ResponseEntity.status(HttpStatus.OK).body(professor.get());
     }
 }
