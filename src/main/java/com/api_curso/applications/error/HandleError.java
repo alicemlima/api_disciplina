@@ -36,7 +36,7 @@ public class HandleError extends ResponseEntityExceptionHandler {
     }
 
     @ExceptionHandler(value = {EntityNotFoundException.class})
-    public ResponseEntity<Object> AnyExceptions(Exception erro) {
+    public ResponseEntity<Object> anyExceptions(Exception erro) {
         String message = erro.getLocalizedMessage();
         if(message == null) {
             message = erro.toString();
