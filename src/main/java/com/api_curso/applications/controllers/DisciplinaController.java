@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * Responsável por controlar as rotas do endpoint (/disciplinas) e realizar a regra de negócio
@@ -125,6 +126,21 @@ public class DisciplinaController implements BaseController<Disciplina> {
                 .findById(alunoId)
                 .orElseThrow(() -> new EntityNotFoundException(Aluno.class.getSimpleName()));
         disciplina.addAluno(aluno);
+        disciplinaRepository.save(disciplina);
+        return ResponseEntity.ok().body(disciplina);
+    }
+
+    @PutMapping("/associarAluno/{disciplinaId}")
+    public ResponseEntity<Disciplina> associateAlunos(@PathVariable Long disciplinaId, @RequestBody List<Aluno> alunosRequest) {
+        Disciplina disciplina = disciplinaRepository
+                .findById(disciplinaId)
+                .orElseThrow(() -> new EntityNotFoundException(Disciplina.class.getSimpleName()));
+
+        Set<Aluno> alunos = alunosRequest.stream()
+                .filter(alunoPresent -> alunoRepository.existsById(alunoPresent.getId()))
+                .map(item -> alunoRepository.findById(item.getId()).get())
+                .collect(Collectors.toSet());
+        disciplina.addAlunos(alunos);
         disciplinaRepository.save(disciplina);
         return ResponseEntity.ok().body(disciplina);
     }

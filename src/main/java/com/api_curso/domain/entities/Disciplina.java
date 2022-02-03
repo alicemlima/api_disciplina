@@ -6,6 +6,7 @@ import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Data
@@ -31,6 +32,10 @@ public class Disciplina extends BaseEntity {
 
     public Boolean addAluno(Aluno aluno){
         return this.alunos.add(aluno);
+    }
+
+    public void addAlunos(Set<Aluno> alunos){
+        alunos.forEach(aluno -> this.alunos.add(aluno));
     }
 
     public Boolean removeAluno(Aluno aluno) {
